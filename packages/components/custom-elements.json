@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "\"./test/test\""
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/test/test.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Test",
+          "members": [
+            {
+              "kind": "field",
+              "name": "title",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "title"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "title",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "title"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wc-test",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Test",
+          "declaration": {
+            "name": "Test",
+            "module": "src/test/test.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wc-test",
+          "declaration": {
+            "name": "Test",
+            "module": "src/test/test.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+module.exports = {
+  parserOptions: {
+    project: ["./tsconfig.json"],
+    tsconfigRootDir: __dirname,
+  },
+  settings: {
+    "import/resolver": {
+      typescript: {
+        project: [__dirname + "/tsconfig.json"],
+      },
+    },
+  },
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint"],
+  extends: [
+    "eslint:recommended",
+    "@open-wc/eslint-config",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:wc/recommended",
+    "plugin:wc/best-practice",
+    "plugin:lit/recommended",
+    "plugin:lit-a11y/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:storybook/recommended",
+    "prettier",
+  ],
+  rules: {
+    "no-console": "error",
+    "no-array-constructor": "error",
+    quotes: ["error", "double"],
+    "default-param-last": "error",
+    "no-confusing-arrow": "error",
+    "import/no-duplicates": "error",
+    "no-constructor-return": "error",
+    "no-implicit-globals": "error",
+    "import/order": "off",
+    "import/extensions": "off",
+    "lines-between-class-members": "off",
+    "arrow-body-style": "off",
+    "import/no-extraneous-dependencies": "error",
+    "no-nested-ternary": "off",
+    curly: "off",
+    "arrow-parens": "off",
+    "class-methods-use-this": "off",
+    "wc/guard-super-call": "off",
+    "storybook/default-exports": "off",
+  },
+  overrides: [
+    {
+      files: ["**/*.stories.ts", "**/*.test.ts"],
+      rules: {
+        "import/no-extraneous-dependencies": "off",
+        "no-unused-expressions": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+      },
+    },
+  ],
+};

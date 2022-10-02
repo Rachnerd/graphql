@@ -159,6 +159,80 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/rating/rating.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Rating",
+          "members": [
+            {
+              "kind": "field",
+              "name": "rate",
+              "type": {
+                "text": "number"
+              },
+              "attribute": "rate"
+            },
+            {
+              "kind": "field",
+              "name": "count",
+              "type": {
+                "text": "number"
+              },
+              "attribute": "count"
+            },
+            {
+              "kind": "method",
+              "name": "createStars",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "rate",
+              "type": {
+                "text": "number"
+              },
+              "fieldName": "rate"
+            },
+            {
+              "name": "count",
+              "type": {
+                "text": "number"
+              },
+              "fieldName": "count"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wc-rating",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Rating",
+          "declaration": {
+            "name": "Rating",
+            "module": "src/rating/rating.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wc-rating",
+          "declaration": {
+            "name": "Rating",
+            "module": "src/rating/rating.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/price/price.ts",
       "declarations": [
         {
@@ -241,80 +315,6 @@
           "declaration": {
             "name": "Price",
             "module": "src/price/price.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/rating/rating.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Rating",
-          "members": [
-            {
-              "kind": "field",
-              "name": "rate",
-              "type": {
-                "text": "number"
-              },
-              "attribute": "rate"
-            },
-            {
-              "kind": "field",
-              "name": "count",
-              "type": {
-                "text": "number"
-              },
-              "attribute": "count"
-            },
-            {
-              "kind": "method",
-              "name": "createStars",
-              "privacy": "private"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "rate",
-              "type": {
-                "text": "number"
-              },
-              "fieldName": "rate"
-            },
-            {
-              "name": "count",
-              "type": {
-                "text": "number"
-              },
-              "fieldName": "count"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "wc-rating",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Rating",
-          "declaration": {
-            "name": "Rating",
-            "module": "src/rating/rating.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wc-rating",
-          "declaration": {
-            "name": "Rating",
-            "module": "src/rating/rating.ts"
           }
         }
       ]

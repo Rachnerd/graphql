@@ -5,12 +5,12 @@ import "./rating";
 
 export default {
   title: "Components/Atoms/Rating",
-  component: "wc-rating",
+  component: "ov-rating",
 } as Meta;
 
 const Template: Story<Rating> = ({ rate, count }) =>
   html`
-    <wc-rating rate=${rate} count=${count}></wc-rating>
+    <ov-rating rate=${rate} count=${count}></ov-rating>
   `;
 
 export const Primary = Template.bind({});

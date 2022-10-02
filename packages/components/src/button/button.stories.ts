@@ -7,7 +7,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
 
 export default {
   title: "Components/Atoms/Button",
-  component: "wc-button",
+  component: "ov-button",
   argTypes: {
     variant: {
       control: { type: "radio" },
@@ -16,7 +16,7 @@ export default {
   },
   parameters: {
     actions: {
-      handles: ["click wc-button"],
+      handles: ["click ov-button"],
     },
   },
 } as Meta;
@@ -27,9 +27,9 @@ const Template: Story<Button & Record<"slot", string>> = ({
   disabled,
 }) =>
   html`
-    <wc-button variant="${ifDefined(variant)}" ?disabled="${disabled}">
+    <ov-button variant="${ifDefined(variant)}" ?disabled="${disabled}">
       ${slot}
-    </wc-button>
+    </ov-button>
   `;
 
 export const Primary = Template.bind({});
@@ -52,13 +52,13 @@ const IconTemplate: Story<Button & Record<"slot", string>> = ({
 }) =>
   html`
     <style>
-      wc-icon {
-        --wc-icon-size: var(--icon-md);
+      ov-icon {
+        --ov-icon-size: var(--icon-md);
       }
     </style>
-    <wc-button variant="${ifDefined(variant)}" ?disabled="${disabled}">
-      <wc-icon icon="envelope"></wc-icon>
-    </wc-button>
+    <ov-button variant="${ifDefined(variant)}" ?disabled="${disabled}">
+      <ov-icon icon="envelope"></ov-icon>
+    </ov-button>
   `;
 
 export const Icon = IconTemplate.bind({});

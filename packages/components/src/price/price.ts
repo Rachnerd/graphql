@@ -6,13 +6,13 @@ import { customElement, property } from "lit/decorators.js";
  * @attr currency
  * @attr locale
  */
-@customElement("wc-price")
+@customElement("ov-price")
 export class Price extends LitElement {
   static styles = [
     css`
       :host {
         display: block;
-        color: var(--wc-price-color, var(--color-primary));
+        color: var(--ov-price-color, var(--color-primary));
       }
     `,
   ];
@@ -38,6 +38,6 @@ export class Price extends LitElement {
 }
 declare global {
   interface HTMLElementTagNameMap {
-    "wc-price": Price;
+    "ov-price": Price;
   }
 }

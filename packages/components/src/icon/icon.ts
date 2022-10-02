@@ -36,15 +36,15 @@ const IconMap: Record<SupportedIcon, FaIcon> = {
 /**
  * @attr icon
  */
-@customElement("wc-icon")
+@customElement("ov-icon")
 export class Icon extends LitElement {
   static styles = [
     css`
       :host {
         display: block;
-        color: var(--wc-icon-color);
-        width: var(--wc-icon-size, var(--icon-md));
-        height: var(--wc-icon-size, var(--icon-md));
+        color: var(--ov-icon-color);
+        width: var(--ov-icon-size, var(--icon-md));
+        height: var(--ov-icon-size, var(--icon-md));
       }
     `,
   ];
@@ -58,6 +58,6 @@ export class Icon extends LitElement {
 }
 declare global {
   interface HTMLElementTagNameMap {
-    "wc-icon": Icon;
+    "ov-icon": Icon;
   }
 }

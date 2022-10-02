@@ -6,16 +6,16 @@ import { ifDefined } from "lit-html/directives/if-defined";
 
 export default {
   title: "Components/Atoms/Price",
-  component: "wc-price",
+  component: "ov-price",
 } as Meta;
 
 const Template: Story<Price> = ({ amount, currency, locale }) =>
   html`
-    <wc-price
+    <ov-price
       amount="${amount}"
       currency=${ifDefined(currency)}
       locale=${ifDefined(locale)}
-    ></wc-price>
+    ></ov-price>
   `;
 
 export const Primary = Template.bind({});

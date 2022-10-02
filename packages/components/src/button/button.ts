@@ -5,7 +5,7 @@ import { customElement, property } from "lit/decorators.js";
  * @attr variant
  * @attr disabled
  */
-@customElement("wc-button")
+@customElement("ov-button")
 export class Button extends LitElement {
   static styles = [
     css`
@@ -91,6 +91,6 @@ export class Button extends LitElement {
 }
 declare global {
   interface HTMLElementTagNameMap {
-    "wc-button": Button;
+    "ov-button": Button;
   }
 }

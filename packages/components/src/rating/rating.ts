@@ -8,7 +8,7 @@ const STAR_AMOUNT = 5;
  * @attr rate
  * @attr count
  */
-@customElement("wc-rating")
+@customElement("ov-rating")
 export class Rating extends LitElement {
   static styles = [
     css`
@@ -38,14 +38,14 @@ export class Rating extends LitElement {
       (delta) =>
         delta >= 1
           ? html`
-              <wc-icon icon="star"></wc-icon>
+              <ov-icon icon="star"></ov-icon>
             `
           : delta === 0.5
           ? html`
-              <wc-icon icon="star-half"></wc-icon>
+              <ov-icon icon="star-half"></ov-icon>
             `
           : html`
-              <wc-icon icon="star-open"></wc-icon>
+              <ov-icon icon="star-open"></ov-icon>
             `
     );
   }
@@ -61,6 +61,6 @@ export class Rating extends LitElement {
 }
 declare global {
   interface HTMLElementTagNameMap {
-    "wc-rating": Rating;
+    "ov-rating": Rating;
   }
 }

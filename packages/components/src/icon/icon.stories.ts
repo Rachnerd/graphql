@@ -25,7 +25,7 @@ const iconOptions: SupportedIcon[] = [
 
 export default {
   title: "Components/Atoms/Icon",
-  component: "wc-icon",
+  component: "ov-icon",
   argTypes: {
     color: {
       control: "select",
@@ -52,12 +52,12 @@ const Template: Story<Icon & Record<"color" | "size", string>> = ({
 }) =>
   html`
     <style>
-      wc-icon {
-        --wc-icon-color: var(${color});
-        --wc-icon-size: var(${size});
+      ov-icon {
+        --ov-icon-color: var(${color});
+        --ov-icon-size: var(${size});
       }
     </style>
-    <wc-icon icon="${icon}"></wc-icon>
+    <ov-icon icon="${icon}"></ov-icon>
   `;
 
 export const Primary = Template.bind({});
@@ -72,12 +72,12 @@ const SizesTemplate: Story<Icon & Record<"color", string>> = ({
       (size, i) => html`
         <style>
           .${`icon-${i}`} {
-            --wc-icon-size: var(${size});
-            --wc-icon-color: var(${color});
+            --ov-icon-size: var(${size});
+            --ov-icon-color: var(${color});
           }
         </style>
         ${size}
-        <wc-icon icon="${icon}" class="icon-${i}"></wc-icon>
+        <ov-icon icon="${icon}" class="icon-${i}"></ov-icon>
       `
     )}
   `;
@@ -90,12 +90,12 @@ const ColorsTemplate: Story<Icon & Record<"size", string>> = ({ size, icon }) =>
       (color, i) => html`
         <style>
           .${`icon-color-${i}`} {
-            --wc-icon-size: var(${size});
-            --wc-icon-color: var(${color});
+            --ov-icon-size: var(${size});
+            --ov-icon-color: var(${color});
           }
         </style>
         ${color}
-        <wc-icon icon="${icon}" class="icon-color-${i}"></wc-icon>
+        <ov-icon icon="${icon}" class="icon-color-${i}"></ov-icon>
       `
     )}
   `;
@@ -111,12 +111,12 @@ const IconTemplate: Story<Icon & Record<"size" | "color", string>> = ({
       (icon, i) => html`
         <style>
           .${`icon-${i}`} {
-            --wc-icon-size: var(${size});
-            --wc-icon-color: var(${color});
+            --ov-icon-size: var(${size});
+            --ov-icon-color: var(${color});
           }
         </style>
         ${icon}
-        <wc-icon icon="${icon}" class="icon-${i}"></wc-icon>
+        <ov-icon icon="${icon}" class="icon-${i}"></ov-icon>
       `
     )}
   `;

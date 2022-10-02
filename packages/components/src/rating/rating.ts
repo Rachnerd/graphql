@@ -35,8 +35,8 @@ export class Rating extends LitElement {
     const roundRate = Math.round(this.rate * 2) / 2;
     const rate = Math.max(roundRate, 1);
     return Array.from({ length: STAR_AMOUNT }, (_, i) => rate - i).map(
-      (delta) =>
-        delta >= 1
+      (delta) => {
+        return delta >= 1
           ? html`
               <ov-icon icon="star"></ov-icon>
             `
@@ -46,7 +46,8 @@ export class Rating extends LitElement {
             `
           : html`
               <ov-icon icon="star-open"></ov-icon>
-            `
+            `;
+      }
     );
   }
 

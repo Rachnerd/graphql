@@ -21,6 +21,8 @@ const iconOptions: SupportedIcon[] = [
   "star-half",
   "star-open",
   "envelope",
+  "minus",
+  "plus",
 ];
 
 export default {
@@ -43,12 +45,18 @@ export default {
       defaultValue: "cart-plus",
     },
   },
+  parameters: {
+    actions: {
+      handles: ["click ov-icon"],
+    },
+  },
 } as Meta;
 
 const Template: Story<Icon & Record<"color" | "size", string>> = ({
   color,
   size,
   icon,
+  disabled,
 }) =>
   html`
     <style>
@@ -57,11 +65,16 @@ const Template: Story<Icon & Record<"color" | "size", string>> = ({
         --ov-icon-size: var(${size});
       }
     </style>
-    <ov-icon icon="${icon}"></ov-icon>
+    <ov-icon icon=${icon} ?disabled=${disabled}></ov-icon>
   `;
 
 export const Primary = Template.bind({});
 Primary.args = {};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  disabled: true,
+};
 
 const SizesTemplate: Story<Icon & Record<"color", string>> = ({
   color,

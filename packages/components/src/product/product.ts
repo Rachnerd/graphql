@@ -6,6 +6,11 @@ import "../subtitle/subtitle";
 import "../thumbnail/thumbnail";
 import "../rating/rating";
 
+export interface RatingData {
+  rate: number;
+  count: number;
+}
+
 export interface ProductData {
   id: string;
   title: string;
@@ -15,12 +20,8 @@ export interface ProductData {
   image: string;
   rating: RatingData;
 }
-export interface RatingData {
-  rate: number;
-  count: number;
-}
 
-/**`
+/**
  * @prop product
  */
 @customElement("ov-product")
@@ -90,9 +91,7 @@ export class Product extends LitElement {
     const { image, title, subtitle, rating, price } = this.product;
     return html`
       <section class="product">
-        <a>
-          <ov-thumbnail src=${image} alt=${title}></ov-thumbnail>
-        </a>
+        <ov-thumbnail src=${image} alt=${title}></ov-thumbnail>
         <div class="info">
           <ov-subtitle>${subtitle}</ov-subtitle>
           <ov-title>${title}</ov-title>

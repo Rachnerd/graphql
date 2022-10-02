@@ -1,12 +1,13 @@
 import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { MixinDisabled } from "src/_mixins/disabled";
 
 /**
  * @attr variant
  * @attr disabled
  */
 @customElement("ov-button")
-export class Button extends LitElement {
+export class Button extends MixinDisabled(LitElement) {
   static styles = [
     css`
       :host {
@@ -59,27 +60,6 @@ export class Button extends LitElement {
 
   @property({ type: String })
   variant: "primary" | "inverted" = "primary";
-
-  @property({ type: Boolean })
-  disabled = false;
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener("click", this.haltDisabledEvents, true);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener("click", this.haltDisabledEvents);
-  }
-
-  private haltDisabledEvents = (event: Event): boolean => {
-    if (this.disabled) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-    }
-    return true;
-  };
 
   render() {
     return html`

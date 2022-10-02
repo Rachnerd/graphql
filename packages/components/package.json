@@ -17,9 +17,12 @@
     "@storybook/addon-actions": "^6.5.10",
     "@storybook/addon-docs": "^6.5.10",
     "@storybook/addon-essentials": "^6.5.10",
+    "@storybook/addon-interactions": "^6.5.12",
     "@storybook/addon-links": "^6.5.10",
     "@storybook/addon-viewport": "^6.5.10",
     "@storybook/addons": "^6.5.10",
+    "@storybook/jest": "^0.0.10",
+    "@storybook/testing-library": "^0.0.13",
     "@storybook/theming": "^6.5.10",
     "@storybook/web-components": "^6.5.10",
     "@types/css": "^0.0.33",
@@ -56,6 +59,9 @@
     "webpack": "4.46.0"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.0",
+    "@fortawesome/free-regular-svg-icons": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "css": "^3.0.0",
     "date-fns": "^2.16.1",
     "lit": "^2.2.1",

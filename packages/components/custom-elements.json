@@ -12,61 +12,147 @@
           "name": "*",
           "declaration": {
             "name": "*",
-            "package": "\"./test/test\""
+            "package": "\"./button/button\""
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "\"./icon/icon\""
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/test/test.ts",
+      "path": "src/button/button.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "Test",
+          "name": "Button",
           "members": [
             {
               "kind": "field",
-              "name": "title",
+              "name": "variant",
               "type": {
-                "text": "string"
+                "text": "\"primary\" | \"inverted\""
               },
-              "attribute": "title"
+              "default": "\"primary\"",
+              "attribute": "variant"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "haltDisabledEvents",
+              "privacy": "private"
             }
           ],
           "attributes": [
             {
-              "name": "title",
+              "name": "variant",
               "type": {
-                "text": "string"
+                "text": "\"primary\" | \"inverted\""
               },
-              "fieldName": "title"
+              "default": "\"primary\"",
+              "fieldName": "variant"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "wc-test",
+          "tagName": "wc-button",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "Test",
+          "name": "Button",
           "declaration": {
-            "name": "Test",
-            "module": "src/test/test.ts"
+            "name": "Button",
+            "module": "src/button/button.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "wc-test",
+          "name": "wc-button",
           "declaration": {
-            "name": "Test",
-            "module": "src/test/test.ts"
+            "name": "Button",
+            "module": "src/button/button.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icon/icon.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Icon",
+          "members": [
+            {
+              "kind": "field",
+              "name": "icon",
+              "type": {
+                "text": "SupportedIcon"
+              },
+              "attribute": "icon"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "icon",
+              "type": {
+                "text": "SupportedIcon"
+              },
+              "fieldName": "icon"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wc-icon",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Icon",
+          "declaration": {
+            "name": "Icon",
+            "module": "src/icon/icon.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wc-icon",
+          "declaration": {
+            "name": "Icon",
+            "module": "src/icon/icon.ts"
           }
         }
       ]

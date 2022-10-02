@@ -37,6 +37,7 @@ module.exports = {
     "no-implicit-globals": "error",
     "import/order": "off",
     "import/extensions": "off",
+    "import/no-duplicates": "off",
     "lines-between-class-members": "off",
     "arrow-body-style": "off",
     "import/no-extraneous-dependencies": "error",

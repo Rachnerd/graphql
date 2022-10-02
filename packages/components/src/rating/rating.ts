@@ -2,7 +2,6 @@ import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import "../icon/icon";
 
-const HALF = 0.5;
 const STAR_AMOUNT = 5;
 
 /**
@@ -34,7 +33,7 @@ export class Rating extends LitElement {
 
   private createStars() {
     const roundRate = Math.round(this.rate * 2) / 2;
-    const rate = Math.max(roundRate, HALF);
+    const rate = Math.max(roundRate, 1);
     return Array.from({ length: STAR_AMOUNT }, (_, i) => rate - i).map(
       (delta) =>
         delta >= 1

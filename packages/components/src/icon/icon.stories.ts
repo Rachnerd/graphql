@@ -89,13 +89,13 @@ const ColorsTemplate: Story<Icon & Record<"size", string>> = ({ size, icon }) =>
     ${colorOptions.map(
       (color, i) => html`
         <style>
-          .${`icon-${i}`} {
+          .${`icon-color-${i}`} {
             --wc-icon-size: var(${size});
             --wc-icon-color: var(${color});
           }
         </style>
         ${color}
-        <wc-icon icon="${icon}" class="icon-${i}"></wc-icon>
+        <wc-icon icon="${icon}" class="icon-color-${i}"></wc-icon>
       `
     )}
   `;

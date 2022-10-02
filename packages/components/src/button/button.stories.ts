@@ -6,7 +6,7 @@ import "../icon/icon";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 export default {
-  title: "Components/Button",
+  title: "Components/Atoms/Button",
   component: "wc-button",
   argTypes: {
     variant: {
@@ -52,7 +52,7 @@ const IconTemplate: Story<Button & Record<"slot", string>> = ({
 }) =>
   html`
     <style>
-      wc-button {
+      wc-icon {
         --wc-icon-size: var(--icon-md);
       }
     </style>

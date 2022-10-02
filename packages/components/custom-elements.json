@@ -156,6 +156,168 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/price/price.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Price",
+          "members": [
+            {
+              "kind": "field",
+              "name": "amount",
+              "type": {
+                "text": "number"
+              },
+              "attribute": "amount"
+            },
+            {
+              "kind": "field",
+              "name": "locale",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"nl-NL\"",
+              "attribute": "locale"
+            },
+            {
+              "kind": "field",
+              "name": "currency",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"EUR\"",
+              "attribute": "currency"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "amount",
+              "type": {
+                "text": "number"
+              },
+              "fieldName": "amount"
+            },
+            {
+              "name": "currency",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"EUR\"",
+              "fieldName": "currency"
+            },
+            {
+              "name": "locale",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"nl-NL\"",
+              "fieldName": "locale"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wc-price",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Price",
+          "declaration": {
+            "name": "Price",
+            "module": "src/price/price.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wc-price",
+          "declaration": {
+            "name": "Price",
+            "module": "src/price/price.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/rating/rating.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Rating",
+          "members": [
+            {
+              "kind": "field",
+              "name": "rate",
+              "type": {
+                "text": "number"
+              },
+              "attribute": "rate"
+            },
+            {
+              "kind": "field",
+              "name": "count",
+              "type": {
+                "text": "number"
+              },
+              "attribute": "count"
+            },
+            {
+              "kind": "method",
+              "name": "createStars",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "rate",
+              "type": {
+                "text": "number"
+              },
+              "fieldName": "rate"
+            },
+            {
+              "name": "count",
+              "type": {
+                "text": "number"
+              },
+              "fieldName": "count"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wc-rating",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Rating",
+          "declaration": {
+            "name": "Rating",
+            "module": "src/rating/rating.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wc-rating",
+          "declaration": {
+            "name": "Rating",
+            "module": "src/rating/rating.ts"
+          }
+        }
+      ]
     }
   ]
 }

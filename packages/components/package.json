@@ -8,6 +8,7 @@
   "license": "ISC",
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.5.7",
+    "@fontsource/roboto": "^4.5.8",
     "@lit-labs/react": "^1.0.2",
     "@open-wc/eslint-config": "^7.0.0",
     "@open-wc/testing": "^3.0.3",

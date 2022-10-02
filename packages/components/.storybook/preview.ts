@@ -5,6 +5,7 @@ import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import customElementsManifest from "../custom-elements.json";
 import "./style.css";
 import { transformSource } from "./transform-source";
+import "@fontsource/roboto";
 
 setCustomElementsManifest(customElementsManifest);
 

@@ -5,20 +5,31 @@ import {
   icon,
   Icon as FaIcon,
 } from "@fortawesome/fontawesome-svg-core";
-import { faStar, faStarHalf } from "@fortawesome/free-regular-svg-icons";
-import { faCartPlus, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faStarHalfStroke } from "@fortawesome/free-regular-svg-icons";
+import {
+  faCartPlus,
+  faEnvelope,
+  faStar as faStarSolid,
+} from "@fortawesome/free-solid-svg-icons";
 
 library.add(faStar);
+library.add(faStarSolid);
 library.add(faCartPlus);
-library.add(faStarHalf);
+library.add(faStarHalfStroke);
 library.add(faEnvelope);
 
-type SupportedIcon = "cart-plus" | "star" | "star-half" | "envelope";
+export type SupportedIcon =
+  | "cart-plus"
+  | "star"
+  | "star-half"
+  | "star-open"
+  | "envelope";
 
 const IconMap: Record<SupportedIcon, FaIcon> = {
   "cart-plus": icon({ prefix: "fas", iconName: "cart-plus" }),
-  star: icon({ prefix: "far", iconName: "star" }),
-  "star-half": icon({ prefix: "far", iconName: "star-half" }),
+  star: icon({ prefix: "fas", iconName: "star" }),
+  "star-open": icon({ prefix: "far", iconName: "star" }),
+  "star-half": icon({ prefix: "far", iconName: "star-half-stroke" }),
   envelope: icon({ prefix: "fas", iconName: "envelope" }),
 };
 

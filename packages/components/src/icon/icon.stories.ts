@@ -1,6 +1,6 @@
 import { Meta, Story } from "@storybook/web-components";
 import { html } from "lit";
-import { Icon } from "./icon";
+import { Icon, SupportedIcon } from "./icon";
 import "./icon";
 
 const sizeOptions = [
@@ -15,10 +15,16 @@ const sizeOptions = [
 
 const colorOptions = ["--color-primary", "--color-secondary"];
 
-const iconOptions = ["cart-plus", "star", "star-half", "envelope"];
+const iconOptions: SupportedIcon[] = [
+  "cart-plus",
+  "star",
+  "star-half",
+  "star-open",
+  "envelope",
+];
 
 export default {
-  title: "Components/Icon",
+  title: "Components/Atoms/Icon",
   component: "wc-icon",
   argTypes: {
     color: {
@@ -110,7 +116,7 @@ const IconTemplate: Story<Icon & Record<"size" | "color", string>> = ({
           }
         </style>
         ${icon}
-        <wc-icon icon="${icon as any}" class="icon-${i}"></wc-icon>
+        <wc-icon icon="${icon}" class="icon-${i}"></wc-icon>
       `
     )}
   `;

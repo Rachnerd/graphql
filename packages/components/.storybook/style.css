@@ -1,3 +1,7 @@
+body {
+  font-family: Roboto;
+}
+
 :root {
   /**
      * Colors
@@ -35,4 +39,12 @@
   --space-lg: 32px;
   --space-xl: 52px;
   --space-xxl: 84px;
+
+  --font-xxs: 9px;
+  --font-xs: 10px;
+  --font-sm: 10px;
+  --font-md: 16px;
+  --font-lg: 18px;
+  --font-xl: 24px;
+  --font-xxl: 32px;
 }

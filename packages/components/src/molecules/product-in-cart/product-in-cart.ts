@@ -2,7 +2,7 @@ import { css, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 import "../product/product";
 import "../../atoms/icon/icon";
-import { MixinProduct } from "../../_mixins";
+import { MixinProduct } from "../../_mixins/product";
 
 export type ProductInCartRemove = CustomEvent<void>;
 

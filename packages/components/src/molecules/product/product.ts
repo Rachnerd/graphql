@@ -6,7 +6,7 @@ import "../../atoms/subtitle/subtitle";
 import "../../atoms/thumbnail/thumbnail";
 import "../../atoms/spinner/spinner";
 import "../rating/rating";
-import { MixinProduct } from "../../_mixins";
+import { MixinProduct } from "../../_mixins/product";
 
 /**
  * @prop product
@@ -17,6 +17,7 @@ export class Product extends MixinProduct(LitElement) {
   static styles = [
     css`
       :host {
+        /* background-color: red; */
         display: block;
         --ov-subtitle-line-clamp: 1;
         --ov-title-line-clamp: 2;

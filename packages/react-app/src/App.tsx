@@ -39,7 +39,6 @@ function App() {
                   id: i.toString(),
                 }}
                 amount={amounts[i.toString()] ?? 1}
-                priceLoading={i % 2 === 0}
                 onIncrement={({ detail: { step } }) =>
                   setAmounts((amounts) => ({
                     ...amounts,

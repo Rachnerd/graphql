@@ -5,7 +5,7 @@ import "../../atoms/title/title";
 import "../../atoms/thumbnail/thumbnail";
 import "../quantity/quantity";
 import "../../atoms/spinner/spinner";
-import { ProductData } from "src/_mixins";
+import { ProductData } from "../../_mixins/product";
 
 export type CartProductRemoveEvent = CustomEvent<void>;
 

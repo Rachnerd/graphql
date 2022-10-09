@@ -3,7 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 import "../product/product";
 import "../quantity/quantity";
 import "../../atoms/icon/icon";
-import { MixinProduct } from "../../_mixins";
+import { MixinProduct } from "../../_mixins/product";
 
 export type AddToCartEvent = CustomEvent<{ id: string; amount: number }>;
 

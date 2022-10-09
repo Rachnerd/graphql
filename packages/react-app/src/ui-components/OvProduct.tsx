@@ -1,4 +1,4 @@
-import { Product } from "components/product/product";
+import { Product } from "components/molecules/product/product";
 import { createComponent } from "@lit-labs/react";
 import React from "react";
 

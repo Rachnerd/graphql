@@ -1,4 +1,4 @@
-import { Icon } from "components/icon/icon";
+import { Icon } from "components/atoms/icon/icon";
 import { createComponent } from "@lit-labs/react";
 import React from "react";
 

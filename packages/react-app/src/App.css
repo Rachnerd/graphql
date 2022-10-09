@@ -1,3 +1,16 @@
 ov-icon {
   --ov-icon-size: var(--icon-lg);
 }
+
+[slot="side"] {
+  --ov-grid-min-column-width: 100%;
+  padding: var(--space-xs);
+}
+
+[slot="main"] {
+  padding: var(--space-xs);
+}
+
+h2 {
+  margin-top: 0;
+}

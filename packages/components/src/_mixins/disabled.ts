@@ -1,8 +1,6 @@
 import { LitElement } from "lit";
 import { property } from "lit/decorators.js";
-
-// eslint-disable-next-line
-type Constructor<T = any> = new (...args: any[]) => T;
+import { Constructor } from "./constructor";
 
 export interface DisabledInterface {
   disabled: boolean;

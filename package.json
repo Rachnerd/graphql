@@ -5,7 +5,7 @@
     "bootstrap": "lerna bootstrap",
     "components:lit:watch": "lerna run build:lit:watch --scope=components",
     "components:storybook": "lerna run storybook --scope=components",
-    "react": "npm-run-all -p 'components:lit:watch' 'components:storybook' 'react:start'",
+    "react": "npm-run-all -p \"components:lit:watch\" \"components:storybook\" \"react:start\"",
     "react:start": "lerna run start --scope=react-app"
   },
   "devDependencies": {

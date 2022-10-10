@@ -2,12 +2,14 @@ import { gql } from "@apollo/client";
 import { useState } from "react";
 import "./App.css";
 import {
-  CartDocument,
-  ProductsDocument,
+  CartWithoutPricesDocument,
   useAddToCartMutation,
-  useCartQuery,
-  useProductsQuery,
+  useCartPricesQuery,
+  useCartWithoutPricesQuery,
+  useProductsPricesQuery,
+  useProductsWithoutPricesQuery,
   useRemoveFromCartMutation,
+  useUpdateCartMutation,
 } from "./generated/graphql";
 import { OvCardOverview } from "./ui-components/OvCardOverview";
 import { OvCartProduct } from "./ui-components/OvCartProduct";
@@ -39,7 +41,19 @@ const useAmountsLocal = () => {
 };
 
 function App() {
-  const { loading: productsLoading, data: productsQuery } = useProductsQuery({
+  const { loading: productsLoading, data: productsQuery } =
+    useProductsWithoutPricesQuery({
+      variables: {
+        pagination: {
+          page: 1,
+          size: 6,
+        },
+      },
+    });
+
+  const products = productsQuery?.products.results;
+
+  const { data: productPricesQuery } = useProductsPricesQuery({
     variables: {
       pagination: {
         page: 1,
@@ -48,7 +62,13 @@ function App() {
     },
   });
 
-  const products = productsQuery?.products.results;
+  const productPrices = productPricesQuery?.products.results;
+
+  const { loading: cartLoading, data: cartQuery } = useCartWithoutPricesQuery();
+  const cartProducts = cartQuery?.cart.products;
+
+  const { data: cartPricesQuery } = useCartPricesQuery();
+  const cartWithPrices = cartPricesQuery?.cart.products;
 
   /**
    * UI state amount of each product (before added to the cart)
@@ -56,7 +76,7 @@ function App() {
   const { incrementAmount, decrementAmount, amounts } = useAmountsLocal();
 
   const [addToCart] = useAddToCartMutation({
-    refetchQueries: [CartDocument],
+    refetchQueries: [CartWithoutPricesDocument],
     optimisticResponse: {
       __typename: "Mutation",
       addToCart: true,
@@ -79,7 +99,7 @@ function App() {
   });
 
   const [removeFromCart] = useRemoveFromCartMutation({
-    refetchQueries: [CartDocument],
+    refetchQueries: [CartWithoutPricesDocument],
     optimisticResponse: {
       __typename: "Mutation",
       removeFromCart: true,
@@ -101,8 +121,27 @@ function App() {
     },
   });
 
-  const { loading: cartLoading, data: cartQuery } = useCartQuery();
-  const cartProducts = cartQuery?.cart.products;
+  const [updateCart] = useUpdateCartMutation({
+    optimisticResponse: {
+      __typename: "Mutation",
+      updateCart: true,
+    },
+    update: (proxy, _, { variables }) => {
+      const { updateCartId, quantity } = variables!;
+      proxy.writeFragment({
+        id: proxy.identify({ id: updateCartId, __typename: "CartProduct" }),
+        fragment: gql`
+          fragment CartProductAmount on CartProduct {
+            quantity
+          }
+        `,
+        data: {
+          __typename: "CartProduct",
+          quantity,
+        },
+      });
+    },
+  });
 
   /**
    *  Overview of products
@@ -111,41 +150,46 @@ function App() {
     <>
       <h2>Products</h2>
       <OvCardOverview>
-        {products!.map((product) =>
-          !product.inCart ? (
-            <OvProductInStock
-              key={product.id}
-              product={product}
-              amount={amounts[product.id] ?? 1}
-              onIncrement={({ detail: { step } }) =>
-                incrementAmount(product.id, step)
-              }
-              onDecrement={({ detail: { step } }) =>
-                decrementAmount(product.id, step)
-              }
-              onAddToCart={() =>
-                addToCart({
-                  variables: {
-                    addToCartId: product.id,
-                    quantity: amounts[product.id] ?? 1,
-                  },
-                })
-              }
-            ></OvProductInStock>
-          ) : (
-            <OvProductInCart
-              key={product.id}
-              product={product}
-              onRemoveFromCart={() => {
-                removeFromCart({
-                  variables: {
-                    removeFromCartId: product.id,
-                  },
-                });
-              }}
-            ></OvProductInCart>
-          )
-        )}
+        {products!
+          .map((product, i) => ({
+            ...product,
+            price: productPrices?.[i]?.price,
+          }))
+          .map((product) =>
+            !product.inCart ? (
+              <OvProductInStock
+                key={product.id}
+                product={product}
+                amount={amounts[product.id] ?? 1}
+                onIncrement={({ detail: { step } }) =>
+                  incrementAmount(product.id, step)
+                }
+                onDecrement={({ detail: { step } }) =>
+                  decrementAmount(product.id, step)
+                }
+                onAddToCart={() =>
+                  addToCart({
+                    variables: {
+                      addToCartId: product.id,
+                      quantity: amounts[product.id] ?? 1,
+                    },
+                  })
+                }
+              ></OvProductInStock>
+            ) : (
+              <OvProductInCart
+                key={product.id}
+                product={product}
+                onRemoveFromCart={() => {
+                  removeFromCart({
+                    variables: {
+                      removeFromCartId: product.id,
+                    },
+                  });
+                }}
+              ></OvProductInCart>
+            )
+          )}
       </OvCardOverview>
     </>
   );
@@ -156,26 +200,44 @@ function App() {
   const renderCart = () => (
     <>
       <OvCardOverview>
-        {cartProducts!.map(({ product, quantity }) => (
-          <OvCartProduct
-            key={product.id}
-            product={product}
-            amount={quantity}
-            onRemoveFromCart={() => {
-              removeFromCart({
-                variables: {
-                  removeFromCartId: product.id,
-                },
-              });
-            }}
-            onIncrement={({ detail: { step } }) =>
-              incrementAmount(product.id, step)
-            }
-            onDecrement={({ detail: { step } }) =>
-              decrementAmount(product.id, step)
-            }
-          ></OvCartProduct>
-        ))}
+        {cartProducts!
+          .map((cartProduct, i) => ({
+            ...cartProduct,
+            product: {
+              ...cartProduct.product,
+              price: cartWithPrices?.[i].product.price,
+            },
+          }))
+          .map(({ product, quantity }) => (
+            <OvCartProduct
+              key={product.id}
+              product={product}
+              amount={quantity}
+              onRemoveFromCart={() => {
+                removeFromCart({
+                  variables: {
+                    removeFromCartId: product.id,
+                  },
+                });
+              }}
+              onIncrement={({ detail: { step } }) =>
+                updateCart({
+                  variables: {
+                    updateCartId: product.id,
+                    quantity: quantity + step,
+                  },
+                })
+              }
+              onDecrement={({ detail: { step } }) =>
+                updateCart({
+                  variables: {
+                    updateCartId: product.id,
+                    quantity: quantity - step,
+                  },
+                })
+              }
+            ></OvCartProduct>
+          ))}
       </OvCardOverview>
     </>
   );

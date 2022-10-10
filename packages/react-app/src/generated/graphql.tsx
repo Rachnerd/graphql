@@ -130,10 +130,29 @@ export type AddToCartMutationVariables = Exact<{
 
 export type AddToCartMutation = { __typename?: 'Mutation', addToCart: boolean };
 
-export type CartQueryVariables = Exact<{ [key: string]: never; }>;
+export type CartPricesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CartQuery = { __typename?: 'Query', cart: { __typename?: 'Cart', id: string, total: number, products: Array<{ __typename?: 'CartProduct', id: string, quantity: number, total: number, product: { __typename?: 'Product', id: string, title: string, price: number, image: string } }> } };
+export type CartPricesQuery = { __typename?: 'Query', cart: { __typename?: 'Cart', id: string, total: number, products: Array<{ __typename?: 'CartProduct', id: string, quantity: number, total: number, product: { __typename?: 'Product', id: string, title: string, price: number, image: string } }> } };
+
+export type CartWithoutPricesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CartWithoutPricesQuery = { __typename?: 'Query', cart: { __typename?: 'Cart', id: string, total: number, products: Array<{ __typename?: 'CartProduct', id: string, quantity: number, total: number, product: { __typename?: 'Product', id: string, title: string, image: string } }> } };
+
+export type ProductsPricesQueryVariables = Exact<{
+  pagination: PaginationParams;
+}>;
+
+
+export type ProductsPricesQuery = { __typename?: 'Query', products: { __typename?: 'Products', results: Array<{ __typename?: 'Product', id: string, price: number }> } };
+
+export type ProductsWithoutPricesQueryVariables = Exact<{
+  pagination: PaginationParams;
+}>;
+
+
+export type ProductsWithoutPricesQuery = { __typename?: 'Query', products: { __typename?: 'Products', results: Array<{ __typename?: 'Product', id: string, title: string, description: string, category: string, image: string, inCart: boolean, rating: { __typename?: 'Rating', count: number, rate: number } }> } };
 
 export type ProductsQueryVariables = Exact<{
   pagination: PaginationParams;
@@ -148,6 +167,14 @@ export type RemoveFromCartMutationVariables = Exact<{
 
 
 export type RemoveFromCartMutation = { __typename?: 'Mutation', removeFromCart: boolean };
+
+export type UpdateCartMutationVariables = Exact<{
+  updateCartId: Scalars['ID'];
+  quantity: Scalars['Int'];
+}>;
+
+
+export type UpdateCartMutation = { __typename?: 'Mutation', updateCart: boolean };
 
 
 export const AddToCartDocument = gql`
@@ -182,8 +209,8 @@ export function useAddToCartMutation(baseOptions?: Apollo.MutationHookOptions<Ad
 export type AddToCartMutationHookResult = ReturnType<typeof useAddToCartMutation>;
 export type AddToCartMutationResult = Apollo.MutationResult<AddToCartMutation>;
 export type AddToCartMutationOptions = Apollo.BaseMutationOptions<AddToCartMutation, AddToCartMutationVariables>;
-export const CartDocument = gql`
-    query Cart {
+export const CartPricesDocument = gql`
+    query CartPrices {
   cart {
     id
     total
@@ -203,31 +230,160 @@ export const CartDocument = gql`
     `;
 
 /**
- * __useCartQuery__
+ * __useCartPricesQuery__
  *
- * To run a query within a React component, call `useCartQuery` and pass it any options that fit your needs.
- * When your component renders, `useCartQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useCartPricesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCartPricesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useCartQuery({
+ * const { data, loading, error } = useCartPricesQuery({
  *   variables: {
  *   },
  * });
  */
-export function useCartQuery(baseOptions?: Apollo.QueryHookOptions<CartQuery, CartQueryVariables>) {
+export function useCartPricesQuery(baseOptions?: Apollo.QueryHookOptions<CartPricesQuery, CartPricesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CartQuery, CartQueryVariables>(CartDocument, options);
+        return Apollo.useQuery<CartPricesQuery, CartPricesQueryVariables>(CartPricesDocument, options);
       }
-export function useCartLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CartQuery, CartQueryVariables>) {
+export function useCartPricesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CartPricesQuery, CartPricesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CartQuery, CartQueryVariables>(CartDocument, options);
+          return Apollo.useLazyQuery<CartPricesQuery, CartPricesQueryVariables>(CartPricesDocument, options);
         }
-export type CartQueryHookResult = ReturnType<typeof useCartQuery>;
-export type CartLazyQueryHookResult = ReturnType<typeof useCartLazyQuery>;
-export type CartQueryResult = Apollo.QueryResult<CartQuery, CartQueryVariables>;
+export type CartPricesQueryHookResult = ReturnType<typeof useCartPricesQuery>;
+export type CartPricesLazyQueryHookResult = ReturnType<typeof useCartPricesLazyQuery>;
+export type CartPricesQueryResult = Apollo.QueryResult<CartPricesQuery, CartPricesQueryVariables>;
+export const CartWithoutPricesDocument = gql`
+    query CartWithoutPrices {
+  cart {
+    id
+    total
+    products {
+      id
+      quantity
+      total
+      product {
+        id
+        title
+        image
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCartWithoutPricesQuery__
+ *
+ * To run a query within a React component, call `useCartWithoutPricesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCartWithoutPricesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCartWithoutPricesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCartWithoutPricesQuery(baseOptions?: Apollo.QueryHookOptions<CartWithoutPricesQuery, CartWithoutPricesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CartWithoutPricesQuery, CartWithoutPricesQueryVariables>(CartWithoutPricesDocument, options);
+      }
+export function useCartWithoutPricesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CartWithoutPricesQuery, CartWithoutPricesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CartWithoutPricesQuery, CartWithoutPricesQueryVariables>(CartWithoutPricesDocument, options);
+        }
+export type CartWithoutPricesQueryHookResult = ReturnType<typeof useCartWithoutPricesQuery>;
+export type CartWithoutPricesLazyQueryHookResult = ReturnType<typeof useCartWithoutPricesLazyQuery>;
+export type CartWithoutPricesQueryResult = Apollo.QueryResult<CartWithoutPricesQuery, CartWithoutPricesQueryVariables>;
+export const ProductsPricesDocument = gql`
+    query ProductsPrices($pagination: PaginationParams!) {
+  products(pagination: $pagination) {
+    results {
+      id
+      price
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductsPricesQuery__
+ *
+ * To run a query within a React component, call `useProductsPricesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsPricesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductsPricesQuery({
+ *   variables: {
+ *      pagination: // value for 'pagination'
+ *   },
+ * });
+ */
+export function useProductsPricesQuery(baseOptions: Apollo.QueryHookOptions<ProductsPricesQuery, ProductsPricesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductsPricesQuery, ProductsPricesQueryVariables>(ProductsPricesDocument, options);
+      }
+export function useProductsPricesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsPricesQuery, ProductsPricesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductsPricesQuery, ProductsPricesQueryVariables>(ProductsPricesDocument, options);
+        }
+export type ProductsPricesQueryHookResult = ReturnType<typeof useProductsPricesQuery>;
+export type ProductsPricesLazyQueryHookResult = ReturnType<typeof useProductsPricesLazyQuery>;
+export type ProductsPricesQueryResult = Apollo.QueryResult<ProductsPricesQuery, ProductsPricesQueryVariables>;
+export const ProductsWithoutPricesDocument = gql`
+    query ProductsWithoutPrices($pagination: PaginationParams!) {
+  products(pagination: $pagination) {
+    results {
+      id
+      title
+      description
+      category
+      image
+      rating {
+        count
+        rate
+      }
+      inCart
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductsWithoutPricesQuery__
+ *
+ * To run a query within a React component, call `useProductsWithoutPricesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsWithoutPricesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductsWithoutPricesQuery({
+ *   variables: {
+ *      pagination: // value for 'pagination'
+ *   },
+ * });
+ */
+export function useProductsWithoutPricesQuery(baseOptions: Apollo.QueryHookOptions<ProductsWithoutPricesQuery, ProductsWithoutPricesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductsWithoutPricesQuery, ProductsWithoutPricesQueryVariables>(ProductsWithoutPricesDocument, options);
+      }
+export function useProductsWithoutPricesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsWithoutPricesQuery, ProductsWithoutPricesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductsWithoutPricesQuery, ProductsWithoutPricesQueryVariables>(ProductsWithoutPricesDocument, options);
+        }
+export type ProductsWithoutPricesQueryHookResult = ReturnType<typeof useProductsWithoutPricesQuery>;
+export type ProductsWithoutPricesLazyQueryHookResult = ReturnType<typeof useProductsWithoutPricesLazyQuery>;
+export type ProductsWithoutPricesQueryResult = Apollo.QueryResult<ProductsWithoutPricesQuery, ProductsWithoutPricesQueryVariables>;
 export const ProductsDocument = gql`
     query Products($pagination: PaginationParams!) {
   products(pagination: $pagination) {
@@ -306,3 +462,35 @@ export function useRemoveFromCartMutation(baseOptions?: Apollo.MutationHookOptio
 export type RemoveFromCartMutationHookResult = ReturnType<typeof useRemoveFromCartMutation>;
 export type RemoveFromCartMutationResult = Apollo.MutationResult<RemoveFromCartMutation>;
 export type RemoveFromCartMutationOptions = Apollo.BaseMutationOptions<RemoveFromCartMutation, RemoveFromCartMutationVariables>;
+export const UpdateCartDocument = gql`
+    mutation UpdateCart($updateCartId: ID!, $quantity: Int!) {
+  updateCart(id: $updateCartId, quantity: $quantity)
+}
+    `;
+export type UpdateCartMutationFn = Apollo.MutationFunction<UpdateCartMutation, UpdateCartMutationVariables>;
+
+/**
+ * __useUpdateCartMutation__
+ *
+ * To run a mutation, you first call `useUpdateCartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCartMutation, { data, loading, error }] = useUpdateCartMutation({
+ *   variables: {
+ *      updateCartId: // value for 'updateCartId'
+ *      quantity: // value for 'quantity'
+ *   },
+ * });
+ */
+export function useUpdateCartMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCartMutation, UpdateCartMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCartMutation, UpdateCartMutationVariables>(UpdateCartDocument, options);
+      }
+export type UpdateCartMutationHookResult = ReturnType<typeof useUpdateCartMutation>;
+export type UpdateCartMutationResult = Apollo.MutationResult<UpdateCartMutation>;
+export type UpdateCartMutationOptions = Apollo.BaseMutationOptions<UpdateCartMutation, UpdateCartMutationVariables>;

@@ -1,0 +1,16 @@
+query ProductsWithoutPrices($pagination: PaginationParams!) {
+  products(pagination: $pagination) {
+    results {
+      id
+      title
+      description
+      category
+      image
+      rating {
+        count
+        rate
+      }
+      inCart
+    }
+  }
+}

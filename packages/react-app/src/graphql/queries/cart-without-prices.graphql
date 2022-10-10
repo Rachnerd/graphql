@@ -1,4 +1,4 @@
-query Cart {
+query CartWithoutPrices {
   cart {
     id
     total
@@ -9,7 +9,6 @@ query Cart {
       product {
         id
         title
-        price
         image
       }
     }

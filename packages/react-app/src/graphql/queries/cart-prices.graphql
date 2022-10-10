@@ -1,0 +1,17 @@
+query CartPrices {
+  cart {
+    id
+    total
+    products {
+      id
+      quantity
+      total
+      product {
+        id
+        title
+        price
+        image
+      }
+    }
+  }
+}

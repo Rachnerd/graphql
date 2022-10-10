@@ -83,7 +83,7 @@ function App() {
     <>
       <h2>Products</h2>
       <OvCardOverview>
-        {products!.map((product, i) =>
+        {products!.map((product) =>
           !product.inCart ? (
             <OvProductInStock
               key={product.id}
@@ -117,11 +117,11 @@ function App() {
   const renderCart = () => (
     <>
       <OvCardOverview>
-        {cartProducts!.map(({ product }) => (
+        {cartProducts!.map(({ product, quantity }) => (
           <OvCartProduct
             key={product.id}
             product={product}
-            amount={amounts[product.id] ?? 1}
+            amount={quantity}
             onRemoveFromCart={() => {
               removeFromCart(product.id);
             }}

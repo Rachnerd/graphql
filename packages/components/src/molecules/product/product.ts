@@ -79,17 +79,17 @@ export class Product extends MixinProduct(LitElement) {
   ];
 
   render() {
-    const { image, title, subtitle, rating, price } = this.product;
+    const { image, title, category, rating, price } = this.product;
     return html`
       <section class="product">
         <ov-thumbnail src=${image} alt=${title}></ov-thumbnail>
         <div class="info">
-          <ov-subtitle>${subtitle}</ov-subtitle>
+          <ov-subtitle>${category}</ov-subtitle>
           <ov-title>${title}</ov-title>
           <div class="details">
             <div>
               <ov-rating rate=${rating.rate} count=${rating.count}></ov-rating>
-              ${this.priceLoading
+              ${this.priceLoading || price === undefined
                 ? html`
                     <ov-spinner></ov-spinner>
                   `

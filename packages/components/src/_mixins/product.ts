@@ -10,9 +10,9 @@ export interface RatingData {
 export interface ProductData {
   id: string;
   title: string;
-  price: number;
+  price?: number;
   description: string;
-  subtitle: string;
+  category: string;
   image: string;
   rating: RatingData;
 }

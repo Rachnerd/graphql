@@ -62,6 +62,7 @@ export class Icon extends MixinDisabled(LitElement) {
         color: var(--ov-icon-color);
         width: var(--ov-icon-size, var(--icon-md));
         height: var(--ov-icon-size, var(--icon-md));
+        user-select: none;
       }
 
       svg[disabled] {

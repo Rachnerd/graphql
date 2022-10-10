@@ -70,6 +70,10 @@ export class CartProduct extends LitElement {
         --ov-price-font-size: var(--font-xs);
         display: inline;
       }
+
+      ov-spinner {
+        --ov-spinner-size: 8px;
+      }
     `,
   ];
 
@@ -101,15 +105,22 @@ export class CartProduct extends LitElement {
               <ov-quantity amount=${this.amount}></ov-quantity>
               <ov-icon icon="trash" @click=${this.removeFromCart}></ov-icon>
             </div>
-            <div class="total-price">
-              <div>
-                <span>${this.amount} *</span>
-                <ov-price amount=${this.product.price}></ov-price>
-              </div>
-              <ov-price
-                amount=${(this.amount * (this.product.price * 1000)) / 1000}
-              ></ov-price>
-            </div>
+            ${this.product.price
+              ? html`
+                  <div class="total-price">
+                    <div>
+                      <span>${this.amount} *</span>
+                      <ov-price amount=${this.product.price}></ov-price>
+                    </div>
+                    <ov-price
+                      amount=${(this.amount * (this.product.price * 1000)) /
+                      1000}
+                    ></ov-price>
+                  </div>
+                `
+              : html`
+                  <ov-spinner></ov-spinner>
+                `}
           </div>
         </div>
       </section>

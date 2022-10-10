@@ -1,0 +1,35 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+
+<Meta title="Workshop/assignment-4" />
+
+# Assignment 4: Bonus
+
+Checkout `graphql-assignment-3-solution` if you want to catch up.
+
+## 4.1 Performance issue
+
+Your query is as slow as the slowest resource. To demonstrate this we're going to introduce a performance issue for product price.
+
+_Uncomment the timeout in `<root>/packages/rest-server/src/controllers/price.controller.ts:28` and restart the server._
+
+Loading the site should now be slow.
+
+Luckily the `ProductComponent` supports <a href="http://localhost:6006/?path=/story/components-molecules-product--price-loading" target="_blank">async price loading</a>.
+
+_Remove the price field from Products query._
+
+The products should load fast again.
+
+_Create a query for product prices and merge the data into the UI state._
+
+The products should load fast and prices should appear after 1 sec.
+
+## 4.2 Update cart product
+
+The server supports updating the quantity of a cart product.
+
+_Implement the increment/decrement events of the CartProduct by calling the updateCart mutation._
+
+_Update the cache with the new cart product quantity._
+
+_Fix the prices performance issue._

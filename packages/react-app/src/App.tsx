@@ -1,6 +1,14 @@
+import { gql } from "@apollo/client";
 import { useState } from "react";
 import "./App.css";
-import { useCartQuery, useProductsQuery } from "./generated/graphql";
+import {
+  CartDocument,
+  ProductsDocument,
+  useAddToCartMutation,
+  useCartQuery,
+  useProductsQuery,
+  useRemoveFromCartMutation,
+} from "./generated/graphql";
 import { OvCardOverview } from "./ui-components/OvCardOverview";
 import { OvCartProduct } from "./ui-components/OvCartProduct";
 import { OvDefaultTemplate } from "./ui-components/OvDefaultTemplate";
@@ -30,27 +38,6 @@ const useAmountsLocal = () => {
   return { amounts, incrementAmount, decrementAmount };
 };
 
-/**
- * Keeps track of the cart -> Temporary UI state
- */
-const useCartLocal = () => {
-  const [cart, setCart] = useState<HashMap<boolean>>({});
-
-  const addToCart = (id: string) =>
-    setCart((cart) => ({
-      ...cart,
-      [id]: true,
-    }));
-
-  const removeFromCart = (id: string) => {
-    setCart((cart) => ({
-      ...cart,
-      [id]: false,
-    }));
-  };
-  return { cart, addToCart, removeFromCart };
-};
-
 function App() {
   const { loading: productsLoading, data: productsQuery } = useProductsQuery({
     variables: {
@@ -68,10 +55,51 @@ function App() {
    */
   const { incrementAmount, decrementAmount, amounts } = useAmountsLocal();
 
-  /**
-   * Temporary cart logic
-   */
-  const { addToCart, removeFromCart } = useCartLocal();
+  const [addToCart] = useAddToCartMutation({
+    refetchQueries: [CartDocument],
+    optimisticResponse: {
+      __typename: "Mutation",
+      addToCart: true,
+    },
+    update: (cache, _, { variables }) => {
+      const { addToCartId } = variables!;
+      cache.writeFragment({
+        id: cache.identify({ id: addToCartId, __typename: "Product" }),
+        fragment: gql`
+          fragment ProductInCart on Product {
+            inCart
+          }
+        `,
+        data: {
+          __typename: "Product",
+          inCart: true,
+        },
+      });
+    },
+  });
+
+  const [removeFromCart] = useRemoveFromCartMutation({
+    refetchQueries: [CartDocument],
+    optimisticResponse: {
+      __typename: "Mutation",
+      removeFromCart: true,
+    },
+    update: (cache, _, { variables }) => {
+      const { removeFromCartId } = variables!;
+      cache.writeFragment({
+        id: cache.identify({ id: removeFromCartId, __typename: "Product" }),
+        fragment: gql`
+          fragment ProductInCart on Product {
+            inCart
+          }
+        `,
+        data: {
+          __typename: "Product",
+          inCart: false,
+        },
+      });
+    },
+  });
 
   const { loading: cartLoading, data: cartQuery } = useCartQuery();
   const cartProducts = cartQuery?.cart.products;
@@ -95,14 +123,25 @@ function App() {
               onDecrement={({ detail: { step } }) =>
                 decrementAmount(product.id, step)
               }
-              onAddToCart={() => addToCart(product.id)}
+              onAddToCart={() =>
+                addToCart({
+                  variables: {
+                    addToCartId: product.id,
+                    quantity: amounts[product.id] ?? 1,
+                  },
+                })
+              }
             ></OvProductInStock>
           ) : (
             <OvProductInCart
               key={product.id}
               product={product}
               onRemoveFromCart={() => {
-                removeFromCart(product.id);
+                removeFromCart({
+                  variables: {
+                    removeFromCartId: product.id,
+                  },
+                });
               }}
             ></OvProductInCart>
           )
@@ -123,7 +162,11 @@ function App() {
             product={product}
             amount={quantity}
             onRemoveFromCart={() => {
-              removeFromCart(product.id);
+              removeFromCart({
+                variables: {
+                  removeFromCartId: product.id,
+                },
+              });
             }}
             onIncrement={({ detail: { step } }) =>
               incrementAmount(product.id, step)

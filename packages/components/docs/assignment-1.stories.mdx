@@ -1,0 +1,37 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+
+<Meta title="Workshop/assignment-1" />
+
+# Assignment 1
+
+## 1.1 Schema
+
+_Study file: `<root>/packages/graphql-server/src/schema.grapghql`._
+
+_Go to <a href="http://localhost:4000" target="_blank">http://localhost:4000</a> and click "Query your server"._
+
+All queries are automatically documented by Apollo and can be viewed on the left side.
+
+## 1.2 Products Query
+
+Currently the Query is empty ("Operation" panel in the middle). You can manually type fields (with autocompletion ctrl + space) or
+click the fields in the "Documentation" panel.
+
+_Create a query named "Products" that retrieves the first 6 products with all the fields needed for <a href="http://localhost:6006?path=/docs/components-molecules-product--primary" target="_blank">this</a>
+component. Variables: "page": 1, "size": 6._
+
+## 1.3 Cart Query
+
+_Create a new tab and repeat the previous steps to query the CartProducts for <a href="http://localhost:6006/?path=/docs/components-molecules-cart-product--primary" target="_blank">this</a>
+component. Variables: "page": 1, "size": 20._
+
+## 1.4 Mutations
+
+It's time to mutate the data on the server. Queries and mutations are defined in the root of the schema which can be accessed by clicking "root"
+or back in the Documentation panel.
+
+_Create a new tab and implement the "addToCart" mutation. Variables: "id": "10", "quantity": 2. Run the mutation and query the Cart to see if it works._
+
+_Create a new tab and implement the "updateCart" mutation and change the quantity of the added product. Run the mutation and query the Cart to see if it works._
+
+_Create a new tab and implement the "removeFromCart" mutation and remove the added product. Run the mutation and query the Cart to see if it works._

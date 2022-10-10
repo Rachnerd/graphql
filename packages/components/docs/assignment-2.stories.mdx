@@ -1,0 +1,118 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+
+<Meta title="Workshop/assignment-2" />
+
+# Assignment 2
+
+## 2.1 App
+
+_Open the <a href="http://localhost:3000/" target="_blank">React app</a> and play around with the limited functionality._
+
+Currently the app uses mock data and local state. We will gradually connect to GraphQL.
+
+_Take a look at `<root>/packages/react-app/src/App.tsx` and study the simple app._
+
+## 2.2 First query
+
+_Take a look at `<root>/packages/react-app/src/graphql/queries/products.graphql`._
+
+GraphQL files will be picked up by <a href="https://www.the-guild.dev/graphql/codegen">GraphQL Code Generator</a> and result in a
+generated TypeScript file.
+
+_Take a look at `<root>/packages/react-app/src/graphql/generated/graphql.tsx` and look for `useProductsQuery`._
+
+Each Query and Mutation is converted to a React hook that can directly be used in React components.
+
+_Implement the hook somewhere in the App function and log the output._
+
+```typescript
+import { useProductsQuery } from "./generated/graphql";
+
+function App() {
+  const response = useProductsQuery({
+    variables: {
+      pagination: {
+        page: 1,
+        size: 6,
+      },
+    },
+  });
+  console.log(response);
+  // ...
+}
+```
+
+_Go to your running <a href="http://localhost:3000/" target="_blank">React app</a>, open the console (f12) and inspect the logs._
+
+Now the app has performed its first GraphQL Query.
+
+## 2.2 Replace mock data
+
+Before we can replace the mock data we have make sure the generated hook returns the correct data.
+
+_Update `<root>/packages/react-app/src/graphql/queries/products.graphql` so it contains all fields necessary to render products._
+
+To make life easier it's a good idea to destructure and rename values coming from Apollo like in this example:
+
+```typescript
+const { loading: productsLoading, data: productsQuery } = useProductsQuery(...);
+```
+
+_Log the products and see if the nested results have the correct datamodel so it can replace "PRODUCT_MOCK"_.
+
+GraphQL requests are obviously asynchrous, so before replacing the mock data we have to introduce loading state.
+
+_Use the `loading` property of the Query hook to introduce loading state:_
+
+```tsx
+function App() {
+  // ...
+
+  return (
+    <OvDefaultTemplate>
+      <section slot="main">
+        {productsLoading ? <p>Loading products</p> : renderProductsOverview()}
+      </section>
+      <section slot="side">
+        {productsLoading ? <p>Loading cart</p> : renderCart()}
+      </section>
+    </OvDefaultTemplate>
+  );
+}
+```
+
+_Replace mock data products with the data coming from the server. Note that the datamodel doesn't fit right away because it follows the
+query structure (see example below). Also `data` is optional so it needs to be handled properly (with conditional rendering or TypeScript's evil `!`)._
+
+```graphql
+query Products($pagination: PaginationParams!) {
+  products(pagination: $pagination) {
+    results {
+      id
+      # more fields
+    }
+  }
+}
+```
+
+becomes:
+
+```typescript
+const { loading: productsLoading, data: productsQuery } = useProductsQuery(...);
+
+const products = productsQuery?.products.results;
+```
+
+Now you should see Products from the server.
+
+The client still determines if a product is in the cart, so let's move that to the server.
+
+_Update the "renderProductsOverview" method so it uses `product.inCart` instead of the local solution that determines which component needs to be rendered._
+
+## 2.3 Cart query
+
+_Connect the Cart by creating your own `.graphql` file next to the existing one and implement the generated hook including loading state._
+
+You should now see the cart from the server. The local functionality is broken but the cart and products are in sync.
+
+_Optional: Perform some mutations in the Apollo app and refresh the React app to see the result._

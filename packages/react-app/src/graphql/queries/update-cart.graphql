@@ -1,3 +1,0 @@
-mutation UpdateCart($updateCartId: ID!, $quantity: Int!) {
-  updateCart(id: $updateCartId, quantity: $quantity)
-}

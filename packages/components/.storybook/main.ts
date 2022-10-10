@@ -4,7 +4,7 @@ module.exports = {
   features: {
     postcss: false,
   },
-  stories: ["../src/**/*.stories.@(ts|mdx)"],
+  stories: ["../docs/**/*.stories.mdx", "../src/**/*.stories.@(ts|mdx)"],
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",

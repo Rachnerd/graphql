@@ -6,7 +6,10 @@
     "components:lit:watch": "lerna run build:lit:watch --scope=components",
     "components:storybook": "lerna run storybook --scope=components",
     "react": "npm-run-all -p \"components:lit:watch\" \"components:storybook\" \"react:start\"",
-    "react:start": "lerna run start --scope=react-app"
+    "react:start": "lerna run start --scope=react-app",
+    "server": "npm-run-all -p \"server:rest\" \"server:graphql\"",
+    "server:rest": "lerna run start --scope=rest-server",
+    "server:graphql": "lerna run start --scope=graphql-server"
   },
   "devDependencies": {
     "lerna": "^5.5.2",

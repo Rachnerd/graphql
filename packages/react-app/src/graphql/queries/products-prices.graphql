@@ -1,0 +1,8 @@
+query ProductsPrices($pagination: PaginationParams!) {
+  products(pagination: $pagination) {
+    results {
+      id
+      price
+    }
+  }
+}

@@ -8,7 +8,7 @@ import {
 import { ProductService } from "../services/product.service";
 
 type ProductsRequest = FastifyRequest<{
-  Querystring: Record<keyof PaginationParams, string>;
+  Querystring: Record<keyof PaginationParams | "ids", string>;
 }>;
 
 type ProductByIdRequest = FastifyRequest<{
@@ -20,6 +20,18 @@ export class ProductsController {
     { query }: ProductsRequest,
     reply: FastifyReply
   ): Promise<Pagination<ProductUnion>> {
+    if (query.ids) {
+      const ids = query.ids.split(",");
+      return {
+        results: ProductService.get().filter((product) =>
+          ids.some((id) => id === product.id)
+        ),
+        page: 1,
+        size: ids.length,
+        totalPages: 1,
+        totalResults: ids.length,
+      };
+    }
     try {
       const paginationParams = PaginationService.parseQueryParams(query);
       const products = ProductService.get();

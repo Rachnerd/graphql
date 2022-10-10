@@ -1,6 +1,6 @@
-import { ProductData } from "components/_mixins/product";
 import { useState } from "react";
 import "./App.css";
+import { useCartQuery, useProductsQuery } from "./generated/graphql";
 import { OvCardOverview } from "./ui-components/OvCardOverview";
 import { OvCartProduct } from "./ui-components/OvCartProduct";
 import { OvDefaultTemplate } from "./ui-components/OvDefaultTemplate";
@@ -51,40 +51,17 @@ const useCartLocal = () => {
   return { cart, addToCart, removeFromCart };
 };
 
-/**
- * Mock data -> Temporary
- */
-const PRODUCT_MOCK: ProductData = {
-  id: "1",
-  title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-  price: 109.95,
-  description:
-    "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-  category: "men's clothing",
-  image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-  rating: {
-    rate: 3.9,
-    count: 120,
-  },
-};
-
 function App() {
-  /**
-   * Static data
-   */
-  const products = [
-    PRODUCT_MOCK,
-    PRODUCT_MOCK,
-    PRODUCT_MOCK,
-    PRODUCT_MOCK,
-    PRODUCT_MOCK,
-  ].map((product, i) => ({
-    ...product,
-    /**
-     * Make sure each product has a unique ID
-     */
-    id: i.toString(),
-  }));
+  const { loading: productsLoading, data: productsQuery } = useProductsQuery({
+    variables: {
+      pagination: {
+        page: 1,
+        size: 6,
+      },
+    },
+  });
+
+  const products = productsQuery?.products.results;
 
   /**
    * UI state amount of each product (before added to the cart)
@@ -94,7 +71,10 @@ function App() {
   /**
    * Temporary cart logic
    */
-  const { addToCart, removeFromCart, cart } = useCartLocal();
+  const { addToCart, removeFromCart } = useCartLocal();
+
+  const { loading: cartLoading, data: cartQuery } = useCartQuery();
+  const cartProducts = cartQuery?.cart.products;
 
   /**
    *  Overview of products
@@ -103,8 +83,8 @@ function App() {
     <>
       <h2>Products</h2>
       <OvCardOverview>
-        {products!.map((product) =>
-          !cart[product.id] ? (
+        {products!.map((product, i) =>
+          !product.inCart ? (
             <OvProductInStock
               key={product.id}
               product={product}
@@ -137,32 +117,34 @@ function App() {
   const renderCart = () => (
     <>
       <OvCardOverview>
-        {products
-          .filter((product) => cart[product.id])!
-          .map((product) => (
-            <OvCartProduct
-              key={product.id}
-              product={product}
-              amount={amounts[product.id] ?? 1}
-              onRemoveFromCart={() => {
-                removeFromCart(product.id);
-              }}
-              onIncrement={({ detail: { step } }) =>
-                incrementAmount(product.id, step)
-              }
-              onDecrement={({ detail: { step } }) =>
-                decrementAmount(product.id, step)
-              }
-            ></OvCartProduct>
-          ))}
+        {cartProducts!.map(({ product }) => (
+          <OvCartProduct
+            key={product.id}
+            product={product}
+            amount={amounts[product.id] ?? 1}
+            onRemoveFromCart={() => {
+              removeFromCart(product.id);
+            }}
+            onIncrement={({ detail: { step } }) =>
+              incrementAmount(product.id, step)
+            }
+            onDecrement={({ detail: { step } }) =>
+              decrementAmount(product.id, step)
+            }
+          ></OvCartProduct>
+        ))}
       </OvCardOverview>
     </>
   );
 
   return (
     <OvDefaultTemplate>
-      <section slot="main">{renderProductsOverview()}</section>
-      <section slot="side">{renderCart()}</section>
+      <section slot="main">
+        {productsLoading ? <p>Loading products</p> : renderProductsOverview()}
+      </section>
+      <section slot="side">
+        {cartLoading ? <p>Loading</p> : renderCart()}
+      </section>
     </OvDefaultTemplate>
   );
 }

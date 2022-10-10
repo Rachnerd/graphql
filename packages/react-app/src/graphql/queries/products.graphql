@@ -2,6 +2,16 @@ query Products($pagination: PaginationParams!) {
   products(pagination: $pagination) {
     results {
       id
+      title
+      price
+      description
+      category
+      image
+      rating {
+        count
+        rate
+      }
+      inCart
     }
   }
 }

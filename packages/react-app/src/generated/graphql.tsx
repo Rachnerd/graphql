@@ -122,19 +122,80 @@ export type Rating = {
   rate: Scalars['Float'];
 };
 
+export type CartQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CartQuery = { __typename?: 'Query', cart: { __typename?: 'Cart', id: string, total: number, products: Array<{ __typename?: 'CartProduct', id: string, quantity: number, total: number, product: { __typename?: 'Product', id: string, title: string, price: number, image: string } }> } };
+
 export type ProductsQueryVariables = Exact<{
   pagination: PaginationParams;
 }>;
 
 
-export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'Products', results: Array<{ __typename?: 'Product', id: string }> } };
+export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'Products', results: Array<{ __typename?: 'Product', id: string, title: string, price: number, description: string, category: string, image: string, inCart: boolean, rating: { __typename?: 'Rating', count: number, rate: number } }> } };
 
 
+export const CartDocument = gql`
+    query Cart {
+  cart {
+    id
+    total
+    products {
+      id
+      quantity
+      total
+      product {
+        id
+        title
+        price
+        image
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCartQuery__
+ *
+ * To run a query within a React component, call `useCartQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCartQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCartQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCartQuery(baseOptions?: Apollo.QueryHookOptions<CartQuery, CartQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CartQuery, CartQueryVariables>(CartDocument, options);
+      }
+export function useCartLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CartQuery, CartQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CartQuery, CartQueryVariables>(CartDocument, options);
+        }
+export type CartQueryHookResult = ReturnType<typeof useCartQuery>;
+export type CartLazyQueryHookResult = ReturnType<typeof useCartLazyQuery>;
+export type CartQueryResult = Apollo.QueryResult<CartQuery, CartQueryVariables>;
 export const ProductsDocument = gql`
     query Products($pagination: PaginationParams!) {
   products(pagination: $pagination) {
     results {
       id
+      title
+      price
+      description
+      category
+      image
+      rating {
+        count
+        rate
+      }
+      inCart
     }
   }
 }

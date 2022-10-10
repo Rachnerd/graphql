@@ -1,0 +1,102 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+
+<Meta title="Workshop/assignment-3" />
+
+# Assignment 3
+
+Checkout `graphql-assignment-2-solution` if you fell behind.
+
+## 3.1 Mutations
+
+The app still contains some logic that should be replaced with GraphQL.
+
+_Define an AddToCart mutation inside a new `.graphql` file._
+
+Mutation hooks work a little bit different than queries and return a mutation function:
+
+```typescript
+const [addToCart, { loading, data }] = useAddToCartMutation();
+
+// Somewhere in a handler
+addToCart({
+  variables: {
+    addToCartId: "1",
+    quantity: 123,
+  },
+});
+```
+
+_Update the ` addToCart` event handler of the `ProductInStock` component so it uses the mutation instead._
+
+We've just introduced stale data because the client is out of sync with the server. For now we're
+going to inefficiently fix the issue by refeching data.
+
+The code generator generates Document versions of queries that can be used to refetch:
+
+```typescript
+const [addToCart] = useAddToCartMutation({
+  refetchQueries: [ProductsDocument, CartDocument],
+});
+```
+
+_Implement `removeFromCart`._
+
+_Open the network tab (f12) and see how many calls are performed after adding/removing a product._
+
+This is very inefficient because in most cases the client already knows the result of the mutation.
+
+## 3.2 Optimistic state
+
+User actions should feel instant and not wait for a server response. Optimistic state is returned instantly with the
+assumption that the mutation succeeds.
+
+```typescript
+const [addToCarM] = useAddToCartMutation({
+  // ...
+  optimisticResponse: {
+    __typename: "Mutation",
+    addToCart: true,
+  },
+});
+```
+
+_Implement optimistic state for both mutations._
+
+Now the UI reacts instantly instead of having to wait for a server response.
+
+## 3.3 Cache updates
+
+Apollo stores all GraphQL data in a cache. For small mutations we can decide to update the local cache instead of refetching data.
+
+Before we continue it's a good idea to install the Apollo [chrome](https://chrome.google.com/webstore/detail/apollo-client-devtools/jdkknkkbebbapilgoeccciglkfbmbnfm)
+or [firefox](https://addons.mozilla.org/en-US/firefox/addon/apollo-developer-tools/) extension.
+
+_Optional: Install the extension, open Apollo tab in f12 and look at the cache tab._
+
+GraphQL `fragment` syntax is used to update specific fields of a type. Here's an example of how we can locally update a product's `inCart` field
+without calling the server:
+
+```typescript
+const [addToCart] = useAddToCartMutation({
+  // ...
+  update: (cache, _, { variables }) => {
+    const { addToCartId } = variables!;
+    cache.writeFragment({
+      id: cache.identify({ id: addToCartId, __typename: "Product" }),
+      fragment: gql`
+        fragment ProductInCart on Product {
+          inCart
+        }
+      `,
+      data: {
+        __typename: "Product",
+        inCart: true,
+      },
+    });
+  },
+});
+```
+
+_Implement update functions for the AddToCart + RemoveFromCart mutation and make sure it doesn't refetch ProductsDocument._
+
+Adding and removing products from the cart now feels instant while being in sync with the server.

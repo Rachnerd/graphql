@@ -31,11 +31,4 @@ export class ProductService {
     }
     return await res.json();
   }
-  // async getByIds(ids: readonly string[]): Promise<Product[]> {
-  //   const res = await fetch(
-  //     `http://localhost:8080/products?ids=${ids.join(",")}`
-  //   );
-  //   const { results } = await res.json();
-  //   return results;
-  // }
 }

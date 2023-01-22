@@ -2,7 +2,7 @@ query CartPrices {
   cart {
     id
     total
-    products {
+    entries {
       id
       quantity
       total

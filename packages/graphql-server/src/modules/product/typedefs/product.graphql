@@ -1,0 +1,29 @@
+type Product {
+  id: ID!
+  title: String!
+  description: String!
+  category: String!
+  image: String!
+  rating: Rating!
+}
+
+type Rating {
+  count: Int!
+  rate: Float!
+}
+
+type ProductResults {
+  paginationInfo: PaginationInfo!
+  results: [Product!]!
+}
+
+union ProductResult = Product | NotFound
+
+extend type CartEntry {
+  product: Product!
+}
+
+type Query {
+  products(pagination: PaginationParams!): ProductResults!
+  product(id: ID!): ProductResult!
+}

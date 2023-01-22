@@ -1,0 +1,16 @@
+input PaginationParams {
+  page: Int!
+  size: Int!
+}
+
+type PaginationInfo {
+  page: Int!
+  size: Int!
+  totalResults: Int!
+  totalPages: Int!
+}
+
+type NotFound {
+  id: ID!
+  reason: String!
+}

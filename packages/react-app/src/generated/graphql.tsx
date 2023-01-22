@@ -17,14 +17,14 @@ export type Scalars = {
 
 export type Cart = {
   __typename?: 'Cart';
+  entries: Array<CartEntry>;
   id: Scalars['ID'];
   paginationInfo: PaginationInfo;
-  products: Array<CartProduct>;
   total: Scalars['Float'];
 };
 
-export type CartProduct = {
-  __typename?: 'CartProduct';
+export type CartEntry = {
+  __typename?: 'CartEntry';
   id: Scalars['ID'];
   product: Product;
   quantity: Scalars['Int'];
@@ -88,8 +88,8 @@ export type Product = {
 
 export type ProductResult = NotFound | Product;
 
-export type Products = {
-  __typename?: 'Products';
+export type ProductResults = {
+  __typename?: 'ProductResults';
   paginationInfo: PaginationInfo;
   results: Array<Product>;
 };
@@ -98,7 +98,7 @@ export type Query = {
   __typename?: 'Query';
   cart: Cart;
   product: ProductResult;
-  products: Products;
+  products: ProductResults;
 };
 
 
@@ -133,33 +133,33 @@ export type AddToCartMutation = { __typename?: 'Mutation', addToCart: boolean };
 export type CartPricesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CartPricesQuery = { __typename?: 'Query', cart: { __typename?: 'Cart', id: string, total: number, products: Array<{ __typename?: 'CartProduct', id: string, quantity: number, total: number, product: { __typename?: 'Product', id: string, title: string, price: number, image: string } }> } };
+export type CartPricesQuery = { __typename?: 'Query', cart: { __typename?: 'Cart', id: string, total: number, entries: Array<{ __typename?: 'CartEntry', id: string, quantity: number, total: number, product: { __typename?: 'Product', id: string, title: string, price: number, image: string } }> } };
 
 export type CartWithoutPricesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CartWithoutPricesQuery = { __typename?: 'Query', cart: { __typename?: 'Cart', id: string, total: number, products: Array<{ __typename?: 'CartProduct', id: string, quantity: number, total: number, product: { __typename?: 'Product', id: string, title: string, image: string } }> } };
+export type CartWithoutPricesQuery = { __typename?: 'Query', cart: { __typename?: 'Cart', id: string, total: number, entries: Array<{ __typename?: 'CartEntry', id: string, quantity: number, total: number, product: { __typename?: 'Product', id: string, title: string, image: string } }> } };
 
 export type ProductsPricesQueryVariables = Exact<{
   pagination: PaginationParams;
 }>;
 
 
-export type ProductsPricesQuery = { __typename?: 'Query', products: { __typename?: 'Products', results: Array<{ __typename?: 'Product', id: string, price: number }> } };
+export type ProductsPricesQuery = { __typename?: 'Query', products: { __typename?: 'ProductResults', results: Array<{ __typename?: 'Product', id: string, price: number }> } };
 
 export type ProductsWithoutPricesQueryVariables = Exact<{
   pagination: PaginationParams;
 }>;
 
 
-export type ProductsWithoutPricesQuery = { __typename?: 'Query', products: { __typename?: 'Products', results: Array<{ __typename?: 'Product', id: string, title: string, description: string, category: string, image: string, inCart: boolean, rating: { __typename?: 'Rating', count: number, rate: number } }> } };
+export type ProductsWithoutPricesQuery = { __typename?: 'Query', products: { __typename?: 'ProductResults', results: Array<{ __typename?: 'Product', id: string, title: string, description: string, category: string, image: string, inCart: boolean, rating: { __typename?: 'Rating', count: number, rate: number } }> } };
 
 export type ProductsQueryVariables = Exact<{
   pagination: PaginationParams;
 }>;
 
 
-export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'Products', results: Array<{ __typename?: 'Product', id: string, title: string, price: number, description: string, category: string, image: string, inCart: boolean, rating: { __typename?: 'Rating', count: number, rate: number } }> } };
+export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductResults', results: Array<{ __typename?: 'Product', id: string, title: string, price: number, description: string, category: string, image: string, inCart: boolean, rating: { __typename?: 'Rating', count: number, rate: number } }> } };
 
 export type RemoveFromCartMutationVariables = Exact<{
   removeFromCartId: Scalars['ID'];
@@ -214,7 +214,7 @@ export const CartPricesDocument = gql`
   cart {
     id
     total
-    products {
+    entries {
       id
       quantity
       total
@@ -260,7 +260,7 @@ export const CartWithoutPricesDocument = gql`
   cart {
     id
     total
-    products {
+    entries {
       id
       quantity
       total

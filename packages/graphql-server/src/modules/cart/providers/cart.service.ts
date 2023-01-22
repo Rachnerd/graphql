@@ -1,13 +1,21 @@
+import { Inject, Injectable } from "graphql-modules";
 import fetch from "node-fetch";
-import { Cart, CartProduct, PaginationParams } from "../generated/graphql";
+import { REST_API_URL } from "../../../providers/rest-api-url.token";
+import { CommonModule } from "../../common/generated/module-types";
+import { CartModule } from "../generated/module-types";
+
+@Injectable()
 export class CartService {
-  async get(pagination?: PaginationParams | null): Promise<Cart> {
+  constructor(@Inject(REST_API_URL) private restApiUrl: string) {}
+
+  async get(
+    pagination?: CommonModule.PaginationParams | null
+  ): Promise<CartModule.Cart> {
     const res = await fetch(
-      `http://localhost:8080/cart${
+      `${this.restApiUrl}/cart${
         pagination ? `?page=${pagination.page}&size=${pagination.size}` : ``
       }`
     );
-
     const {
       total,
       products: { results, ...paginationInfo },
@@ -15,14 +23,16 @@ export class CartService {
 
     return {
       id: "0",
-      products: results,
+      entries: results,
       paginationInfo,
       total,
     };
   }
 
-  async post(product: Pick<CartProduct, "id" | "quantity">): Promise<boolean> {
-    const res = await fetch(`http://localhost:8080/cart`, {
+  async post(
+    product: Pick<CartModule.CartEntry, "id" | "quantity">
+  ): Promise<boolean> {
+    const res = await fetch(`${this.restApiUrl}/cart`, {
       method: "POST",
       body: JSON.stringify(product),
       headers: {
@@ -33,8 +43,10 @@ export class CartService {
     return res.status === 204;
   }
 
-  async put(product: Pick<CartProduct, "id" | "quantity">): Promise<boolean> {
-    const res = await fetch(`http://localhost:8080/cart`, {
+  async put(
+    product: Pick<CartModule.CartEntry, "id" | "quantity">
+  ): Promise<boolean> {
+    const res = await fetch(`${this.restApiUrl}/cart`, {
       method: "PUT",
       body: JSON.stringify(product),
       headers: {
@@ -46,7 +58,7 @@ export class CartService {
   }
 
   async delete(id: string): Promise<boolean> {
-    const res = await fetch(`http://localhost:8080/cart/${id}`, {
+    const res = await fetch(`${this.restApiUrl}/cart/${id}`, {
       method: "delete",
     });
     return res.status === 204;

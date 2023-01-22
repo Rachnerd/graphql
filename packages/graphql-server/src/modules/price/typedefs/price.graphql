@@ -1,0 +1,3 @@
+extend type Product {
+  price: Float!
+}

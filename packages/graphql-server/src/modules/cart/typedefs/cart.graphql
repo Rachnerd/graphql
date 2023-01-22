@@ -1,0 +1,22 @@
+type Cart {
+  id: ID!
+  paginationInfo: PaginationInfo!
+  entries: [CartEntry!]!
+  total: Float!
+}
+
+type CartEntry {
+  id: ID!
+  quantity: Int!
+  total: Float!
+}
+
+type Query {
+  cart(pagination: PaginationParams): Cart!
+}
+
+type Mutation {
+  addToCart(id: ID!, quantity: Int!): Boolean!
+  removeFromCart(id: ID!): Boolean!
+  updateCart(id: ID!, quantity: Int!): Boolean!
+}

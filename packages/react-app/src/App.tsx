@@ -65,10 +65,10 @@ function App() {
   const productPrices = productPricesQuery?.products.results;
 
   const { loading: cartLoading, data: cartQuery } = useCartWithoutPricesQuery();
-  const cartProducts = cartQuery?.cart.products;
+  const cartProducts = cartQuery?.cart.entries;
 
   const { data: cartPricesQuery } = useCartPricesQuery();
-  const cartWithPrices = cartPricesQuery?.cart.products;
+  const cartWithPrices = cartPricesQuery?.cart.entries;
 
   /**
    * UI state amount of each product (before added to the cart)

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon src/index.ts",
     "prestart": "npm run codegen",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "test": "jest"
   },
   "author": "Rachnerd",
   "license": "ISC",
@@ -17,10 +18,12 @@
     "@graphql-codegen/typescript": "^2.8.7",
     "@graphql-codegen/typescript-resolvers": "^2.7.12",
     "@graphql-tools/load-files": "^6.6.1",
+    "@jest/globals": "^29.3.1",
     "@types/node": "^18.0.3",
     "@types/node-fetch": "^2.6.2",
     "nodemon": "^2.0.18",
     "reflect-metadata": "^0.1.13",
+    "ts-jest": "^29.0.5",
     "ts-node": "^10.8.1",
     "typescript": "^4.7.4"
   },

@@ -27,6 +27,7 @@ describe("Product query resolver", () => {
           provide: ProductService,
           useValue: {
             getById: jest.fn(),
+            getByIds: jest.fn(),
           },
         },
       ],
@@ -37,7 +38,7 @@ describe("Product query resolver", () => {
   });
 
   test("should return Product if the product exists", async () => {
-    productService.getById.mockResolvedValueOnce(MOCK_PRODUCT);
+    productService.getByIds.mockResolvedValueOnce([MOCK_PRODUCT]);
 
     const { data } = await testkit.execute(app, {
       document: gql`
@@ -56,12 +57,12 @@ describe("Product query resolver", () => {
     });
 
     expect(data!.product).toEqual(MOCK_PRODUCT);
-    expect(productService.getById).toHaveBeenCalledTimes(1);
-    expect(productService.getById).toHaveBeenCalledWith("1");
+    expect(productService.getByIds).toHaveBeenCalledTimes(1);
+    expect(productService.getByIds).toHaveBeenCalledWith(["1"]);
   });
 
   test("should return NotFound if the product does not exist", async () => {
-    productService.getById.mockResolvedValueOnce(undefined);
+    productService.getByIds.mockResolvedValueOnce([undefined as any]);
 
     const { data } = await testkit.execute(app, {
       document: gql`
@@ -80,7 +81,7 @@ describe("Product query resolver", () => {
       id: "1",
       reason: "Product with id 1 does not exist",
     });
-    expect(productService.getById).toHaveBeenCalledTimes(1);
-    expect(productService.getById).toHaveBeenCalledWith("1");
+    expect(productService.getByIds).toHaveBeenCalledTimes(1);
+    expect(productService.getByIds).toHaveBeenCalledWith(["1"]);
   });
 });

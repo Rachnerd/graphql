@@ -7,10 +7,11 @@ import {
   priceModule,
   productModule,
   cartModule,
+  reviewModule,
 } from "./modules";
 
 const application = createApplication({
-  modules: [commonModule, productModule, priceModule, cartModule],
+  modules: [commonModule, productModule, priceModule, cartModule, reviewModule],
   providers: [
     {
       provide: REST_API_URL,

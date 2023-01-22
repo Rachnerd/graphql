@@ -4,12 +4,6 @@ type Product {
   description: String!
   category: String!
   image: String!
-  rating: Rating!
-}
-
-type Rating {
-  count: Int!
-  rate: Float!
 }
 
 type ProductResults {

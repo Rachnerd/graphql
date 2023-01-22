@@ -1,0 +1,8 @@
+extend type Product {
+  rating: Rating!
+}
+
+type Rating {
+  count: Int!
+  rate: Float!
+}

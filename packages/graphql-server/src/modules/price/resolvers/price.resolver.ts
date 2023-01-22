@@ -1,6 +1,6 @@
 import { PriceModule } from "../generated/module-types";
-import { PriceService } from "../providers/price.service";
+import { PRICE_DATALOADER } from "../providers/price.dataloader";
 
 export const Product: PriceModule.Resolvers["Product"] = {
-  price: ({ id }, __, { injector }) => injector.get(PriceService).getById(id),
+  price: ({ id }, __, { injector }) => injector.get(PRICE_DATALOADER).load(id),
 };

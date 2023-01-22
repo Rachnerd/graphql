@@ -1,8 +1,8 @@
 import type { Product } from "../../../generated/schema-types";
 import type { ProductModule } from "../generated/module-types";
-import { ProductService } from "../providers/product.service";
+import { PRODUCT_DATALOADER } from "../providers/product.dataloader";
 
 export const CartEntry: ProductModule.Resolvers["CartEntry"] = {
   product: ({ id }, __, { injector }) =>
-    injector.get(ProductService).getById(id) as Promise<Product>,
+    injector.get(PRODUCT_DATALOADER).load(id) as Promise<Product>,
 };
